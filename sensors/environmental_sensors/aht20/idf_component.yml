@@ -1,7 +1,7 @@
 name: aht20
 version: "1.0.0"
 description: AHT20 Temperature and Humidity Sensor Driver for ESP-IDF
-url: https://github.com/jeetrohan/esp-idf_contributions/tree/main/sensors/environment/aht20
+url: https://github.com/jeetrohan/esp-idf_contributions/tree/main/sensors/environmental_sensors/aht20
 license: Apache-2.0
 
 dependencies:
