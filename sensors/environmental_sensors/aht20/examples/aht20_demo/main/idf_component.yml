@@ -1,4 +1,4 @@
 dependencies:
   aht20:
     version: "*"
-    override_path: "../../../"
+    override_path: "https://github.com/jeetrohan/esp-idf_contributions/blob/main/sensors/environmental_sensors/aht20"
