@@ -116,4 +116,3 @@ void app_main(void)
     printf("\n=== AHT20 Sensor Test Menu ===\n");
     unity_run_menu();  // Run test selection menu in flash monitor
 }
-

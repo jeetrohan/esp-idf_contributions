@@ -1,7 +1,7 @@
 /*
  * @file: aht20_demo.c
  *
- * @brief: A simple demo to use the AHT20 driver 
+ * @brief: A simple demo to use the AHT20 driver
  *
  * @date: April 20, 2025
  *
@@ -28,20 +28,20 @@
 //i2c configuration values
 #define I2C_MASTER_SCL_IO           (22)    // SCL pin
 #define I2C_MASTER_SDA_IO           (21)    // SDA pin
-#define I2C_MASTER_NUM              I2C_NUM_0 
+#define I2C_MASTER_NUM              I2C_NUM_0
 #define I2C_MASTER_FREQ_HZ          (400000)  // I2C frequency
 
 i2c_master_bus_handle_t my_i2c_bus_handle;
 
- void i2c_master_init(void)
- {
+void i2c_master_init(void)
+{
     i2c_master_bus_config_t i2c_mst_config = {
-    .clk_source = I2C_CLK_SRC_DEFAULT,
-    .i2c_port = I2C_MASTER_NUM ,
-    .scl_io_num = I2C_MASTER_SCL_IO,
-    .sda_io_num = I2C_MASTER_SDA_IO,
-    .glitch_ignore_cnt = 7,
-    .flags.enable_internal_pullup = true,
+        .clk_source = I2C_CLK_SRC_DEFAULT,
+        .i2c_port = I2C_MASTER_NUM,
+        .scl_io_num = I2C_MASTER_SCL_IO,
+        .sda_io_num = I2C_MASTER_SDA_IO,
+        .glitch_ignore_cnt = 7,
+        .flags.enable_internal_pullup = true,
     };
     printf("requesting i2c bus handle\n");
     ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &my_i2c_bus_handle));
@@ -51,33 +51,35 @@ i2c_master_bus_handle_t my_i2c_bus_handle;
 }
 
 
-void read_aht20 (void * my_aht20_handle){
-    
+void read_aht20 (void *my_aht20_handle)
+{
+
     aht20_handle_t aht20_handle = (aht20_handle_t) my_aht20_handle;
-	vTaskDelay(400/portTICK_PERIOD_MS);
+    vTaskDelay(400 / portTICK_PERIOD_MS);
     while (1) {
         aht20_read_humiture(aht20_handle);
-        printf("tempertature = %.2fC  humidity = %.3f \n",aht20_handle->humiture.temperature, aht20_handle->humiture.humidity);
-        vTaskDelay(1000/portTICK_PERIOD_MS);
-        }
+        printf("tempertature = %.2fC  humidity = %.3f \n", aht20_handle->humiture.temperature, aht20_handle->humiture.humidity);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
 }
 
 
 void init_aht20()
 {
-	
-   aht20_handle_t aht20_handle =  aht20_create( my_i2c_bus_handle, AHT20_ADDRESS_LOW );
-      
-   printf("initializing aht20\n");
-    while (aht20_init(aht20_handle) != ESP_OK)
-                vTaskDelay(100/portTICK_PERIOD_MS);
+
+    aht20_handle_t aht20_handle =  aht20_create( my_i2c_bus_handle, AHT20_ADDRESS_LOW );
+
+    printf("initializing aht20\n");
+    while (aht20_init(aht20_handle) != ESP_OK) {
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
     printf("aht20 initialized\n");
-    
-    xTaskCreate(read_aht20, "aht20_tester", 2500, aht20_handle, 5, NULL);    
+
+    xTaskCreate(read_aht20, "aht20_tester", 2500, aht20_handle, 5, NULL);
 }
 
 void app_main(void)
 {
-   i2c_master_init();
-   init_aht20();
+    i2c_master_init();
+    init_aht20();
 }
