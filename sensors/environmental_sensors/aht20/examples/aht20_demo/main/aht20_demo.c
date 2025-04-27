@@ -70,7 +70,7 @@ void read_aht20 (void *my_aht20_handle)
 void init_aht20()
 {
     //create a AHT20 device object and receive a device handle for it
-    aht20_handle_t aht20_handle =  aht20_create( my_i2c_bus_handle, AHT20_ADDRESS_LOW );
+    aht20_handle_t aht20_handle =  aht20_create( my_i2c_bus_handle, AHT20_ADDRESS_LOW ); //addresses in aht.h
 
     printf("initializing aht20\n");
     //use the previously created AHT20 device handle for initializing the associated device
