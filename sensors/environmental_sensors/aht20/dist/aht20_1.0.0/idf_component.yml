@@ -1,0 +1,14 @@
+dependencies:
+  idf: '>=5.4'
+description: AHT20 Temperature and Humidity Sensor Driver for ESP-IDF
+license: Apache-2.0
+targets:
+- esp32
+- esp32s2
+- esp32s3
+- esp32c2
+- esp32c3
+- esp32c6
+- esp32h2
+url: https://github.com/jeetrohan/esp-idf_contributions/tree/main/sensors/environmental_sensors/aht20
+version: 1.0.0

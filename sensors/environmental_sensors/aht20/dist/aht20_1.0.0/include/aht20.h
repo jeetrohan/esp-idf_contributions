@@ -45,18 +45,7 @@
 extern "C" {
 #endif
 
-/**
- * @brief chip information definition
- */
-#define CHIP_NAME                           "ASAIR AHT20"   /**< chip name */
-#define SUPPLY_VOLTAGE_MIN                  (2.2f)          /**< chip min supply voltage */
-#define SUPPLY_VOLTAGE_MAX                  (5.5f)          /**< chip max supply voltage */
-#define TEMPERATURE_MIN                     (-40.0f)        /**< chip min operating temperature */
-#define TEMPERATURE_MAX                     (125.0f)        /**< chip max operating temperature */
 
-/**
- * @brief AHT20 I2C and Register addresses
- */
 #define AHT20_ADDRESS_LOW     0X38  /*!< AHT20 I2C ADDRESS LOW */
 #define AHT20_ADDRESS_HIGH    0X39  /*!< AHT20 I2C ADDRESS HIGH */
 #define AHT20_INIT_REG        0XBE  /*!< initialize the AHT20 */
@@ -85,12 +74,12 @@ typedef struct {
 typedef struct {
     i2c_master_dev_handle_t dev_handle;   /*!< i2c device handle. */
     aht20_reading_t humiture;             /*!< AHT20 reading. */
-} aht20_dev_t;
+} aht20_dev_config_t;
 
 /**
  * @brief AHT20 device handle
  */
-typedef aht20_dev_t *aht20_handle_t;
+typedef aht20_dev_config_t *aht20_handle_t;
 
 
 /**
@@ -222,10 +211,10 @@ aht20_handle_t aht20_create ( i2c_master_bus_handle_t bus_handle, uint8_t aht20_
 /**
 * @brief free the resources associated with AHT20 device
 *
-* @param[in] aht20_handler pointer to AHT20 device handle
+* @param[in] aht20_handler AHT20 device handle
 *
 */
-void aht20_delete (aht20_handle_t * aht20_handler);
+void aht20_remove (aht20_handle_t *aht20_handler);
 
 #ifdef __cplusplus
 }

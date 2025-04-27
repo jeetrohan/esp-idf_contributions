@@ -104,7 +104,7 @@ esp_err_t aht20_read_raw(aht20_handle_t aht20_handle, aht20_raw_reading_t *raw_r
 
 #ifdef CONFIG_AHT20_CHECK_CRC
     ESP_RETURN_ON_FALSE(   (calc_CRC8(read_measurement, 6) == read_measurement[6]),
-                           ESP_ERR_INVALID_CRC,
+                           ESP_ERR_INVALID_RESPONSE,
                            s_TAG, "CRC match failed, invalid response received from AHT20");
 #endif
 
@@ -245,9 +245,6 @@ esp_err_t aht20_init (aht20_handle_t aht20_handle)
                             s_TAG, "unable to initialize AHT20\n");
     ESP_LOGI(s_TAG, "AHT20 initialized\n");
 
-    ESP_LOGI(TAG, "%-15s: %d.%d.%d", CHIP_NAME, AHT20_VER_MAJOR, AHT20_VER_MINOR, AHT20_VER_PATCH);
-    ESP_LOGI(TAG, "%-15s: %1.1f - %1.1fV", "SUPPLY_VOLTAGE", SUPPLY_VOLTAGE_MIN, SUPPLY_VOLTAGE_MAX);
-    ESP_LOGI(TAG, "%-15s: %.2f - %.2f℃", "TEMPERATURE", TEMPERATURE_MIN, TEMPERATURE_MAX);
 
     return ESP_OK;
 
@@ -255,7 +252,7 @@ esp_err_t aht20_init (aht20_handle_t aht20_handle)
 
 aht20_handle_t aht20_create ( i2c_master_bus_handle_t bus_handle, uint8_t aht20_address)
 {
-    aht20_handle_t my_aht20_handle = malloc(sizeof(aht20_dev_t));
+    aht20_handle_t my_aht20_handle = malloc(sizeof(aht20_dev_config_t));
 
     if (my_aht20_handle == NULL) {
         ESP_LOGE(s_TAG, "unable to allocate memory to initialize aht20 handle");
@@ -274,7 +271,7 @@ aht20_handle_t aht20_create ( i2c_master_bus_handle_t bus_handle, uint8_t aht20_
     return my_aht20_handle;
 }
 
-void aht20_delete ( aht20_handle_t *aht20ptr)
+void aht20_remove ( aht20_handle_t *aht20ptr)
 {
     i2c_master_bus_rm_device( (*aht20ptr)->dev_handle);
     free(*aht20ptr);
